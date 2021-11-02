@@ -140,7 +140,8 @@
         }
       ],
       "stateMutability": "nonpayable",
-      "type": "function"
+      "type": "function",
+      "oracle_folder": "venmo_oracle"
     }
   ]
 }
