@@ -1,4 +1,3 @@
-
 pragma solidity ^0.8.0;
 
 import "https://github.com/open-contracts/protocol/blob/main/solidity_contracts/OpenContractRopsten.sol";
@@ -14,6 +13,10 @@ contract FiatSwap is OpenContractAlpha {
         return amount[txHash];
     }
 
+
+    function computeHash(string memory sellerVenmo, uint256 priceInCent, string memory transactionMessage, string memory secret) public pure returns(bytes32) {
+        return keccak256(abi.encodePacked(sellerVenmo, priceInCent, transactionMessage, secret));
+    }
 
     function venmoPurchase(bytes32 oracleHash, address payable msgSender, bytes32 txHash) 
     public _oracle(oracleHash, msgSender, this.venmoPurchase.selector) returns(bool) {
