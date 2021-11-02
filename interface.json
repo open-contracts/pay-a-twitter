@@ -64,6 +64,40 @@
     {
       "inputs": [
         {
+          "internalType": "string",
+          "name": "sellerVenmo",
+          "type": "string"
+        },
+        {
+          "internalType": "uint256",
+          "name": "priceInCent",
+          "type": "uint256"
+        },
+        {
+          "internalType": "string",
+          "name": "transactionMessage",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "secret",
+          "type": "string"
+        }
+      ],
+      "name": "computeHash",
+      "outputs": [
+        {
+          "internalType": "bytes32",
+          "name": "",
+          "type": "bytes32"
+        }
+      ],
+      "stateMutability": "pure",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
           "internalType": "address",
           "name": "buyer",
           "type": "address"
@@ -106,8 +140,7 @@
         }
       ],
       "stateMutability": "nonpayable",
-      "type": "function",
-      "oracle_folder": "venmo_oracle"
+      "type": "function"
     }
   ]
 }
