@@ -37,3 +37,5 @@ with opencontracts.enclave_backend() as enclave:
   
   if _seller == seller & _amount >= amount & _message == message:   
     enclave.submit(hash, types=("bytes32",), function_name="venmoPurchase")
+  else:
+    enclave.print(f"Unfortunately your transaction did not have the right parameters :( Seller: {_seller} | Amount: {_amount} | Message: {_message} ") 
