@@ -1,27 +1,8 @@
 {
   "name": "Fiat Swap",
   "network": "Ropsten",
-  "address": "0x365F6b9A2CE5fb2859F47b62Adc17c73CEffb2F5",
+  "address": "0x4a33b99C261769eDCc1a1aCC5c70f6201c1Bbf6b",
   "abi": [
-    {
-      "inputs": [
-        {
-          "internalType": "bytes32",
-          "name": "txHash",
-          "type": "bytes32"
-        }
-      ],
-      "name": "EthForHash",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
     {
       "inputs": [
         {
@@ -98,19 +79,81 @@
     {
       "inputs": [
         {
+          "internalType": "bytes32",
+          "name": "offerHash",
+          "type": "bytes32"
+        }
+      ],
+      "name": "ethOffered",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
           "internalType": "address",
-          "name": "buyer",
+          "name": "to",
           "type": "address"
         },
         {
           "internalType": "bytes32",
-          "name": "txHash",
+          "name": "offerHash",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "uint256",
+          "name": "lockForSeconds",
+          "type": "uint256"
+        }
+      ],
+      "name": "offer",
+      "outputs": [],
+      "stateMutability": "payable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "offerHash",
           "type": "bytes32"
         }
       ],
-      "name": "sell",
-      "outputs": [],
-      "stateMutability": "payable",
+      "name": "retract",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "offerHash",
+          "type": "bytes32"
+        }
+      ],
+      "name": "secondsLeft",
+      "outputs": [
+        {
+          "internalType": "int256",
+          "name": "",
+          "type": "int256"
+        }
+      ],
+      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -127,7 +170,7 @@
         },
         {
           "internalType": "bytes32",
-          "name": "txHash",
+          "name": "offerHash",
           "type": "bytes32"
         }
       ],
