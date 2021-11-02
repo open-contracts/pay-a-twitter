@@ -1,0 +1,113 @@
+{
+  "name": "Fiat Swap",
+  "network": "Ropsten",
+  "address": "0x0e78197048f840B699f77bDC96dd59Fe0e3BEdeB",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "txHash",
+          "type": "bytes32"
+        }
+      ],
+      "name": "EthForHash",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes4",
+          "name": "",
+          "type": "bytes4"
+        }
+      ],
+      "name": "_allowedHash",
+      "outputs": [
+        {
+          "internalType": "bytes32",
+          "name": "",
+          "type": "bytes32"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "_complete_oracles",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "_completed",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "buyer",
+          "type": "address"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "txHash",
+          "type": "bytes32"
+        }
+      ],
+      "name": "sell",
+      "outputs": [],
+      "stateMutability": "payable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "oracleHash",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "address payable",
+          "name": "msgSender",
+          "type": "address"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "txHash",
+          "type": "bytes32"
+        }
+      ],
+      "name": "venmoPurchase",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function",
+      "oracle_folder": "venmo_oracle"
+    }
+  ]
+}
