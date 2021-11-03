@@ -12,7 +12,6 @@ def get_most_recent_tx(mhtml):
   seller = url[28:]
   html = [_ for _ in mhtml.walk() if _.get_content_type() == "text/html"][0]
   parsed = BeautifulSoup(html.get_payload(decode=False))
-  print(parsed.prettify())
   transactions = parsed.find_all(**{'data-testid' :'3D"betweenYou-feed-container"'})[0]
   messages = transactions.findAll('div', {'class': lambda c: c and c.startswith('3D"storyContent_')})
   message = messages[0].text.strip()
