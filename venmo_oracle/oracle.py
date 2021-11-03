@@ -7,7 +7,8 @@ import email
 def get_most_recent_tx(mhtml):
   mhtml = email.message_from_string(mhtml.replace("=\n", ""))
   url = mhtml['Snapshot-Content-Location']
-  assert url.startswith('https://account.venmo.com/u/')
+  print(url)
+  #assert url.startswith('https://account.venmo.com/u/')
   seller = url[28:]
   html = [_ for _ in mhtml.walk() if _.get_content_type() == "text/html"][0]
   parsed = BeautifulSoup(html.get_payload(decode=False))
@@ -15,7 +16,7 @@ def get_most_recent_tx(mhtml):
   messages = transactions.find_all(**{'class': '3D"storyContent_storyContentLink__3z33x"'})
   amounts = transactions.find_all(**{'class': '3D"jss140'})
   message, amount = messages[0].text.strip(), amounts[0].text.strip()
-  assert amount.startswith("- $")
+  #assert amount.startswith("- $")
   amount = int(float(amount[3:])*100)
   return seller, amount, message
 
