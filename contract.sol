@@ -41,6 +41,7 @@ contract FiatSwap is OpenContractAlpha {
     
     function retract(bytes32 offerHash) public returns(bool) {
         require(seller[offerHash] == msg.sender, 'only seller can retract offer');
+        require(lockedUntil[offerHash] <= block.timestamp, "can't retract offer during the locking period. check 'secondsLeft()'");
         uint256 payment = amount[offerHash];
         amount[offerHash] = 0;
         return payable(msg.sender).send(payment);
