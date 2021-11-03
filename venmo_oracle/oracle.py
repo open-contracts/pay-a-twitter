@@ -2,6 +2,8 @@ import opencontracts
 from bs4 import BeautifulSoup
 import email
 
+
+
 def get_most_recent_tx(mhtml):
   mhtml = email.message_from_string(mhtml.replace("=\n", ""))
   url = mhtml['Snapshot-Content-Location']
@@ -16,6 +18,8 @@ def get_most_recent_tx(mhtml):
   assert amount.startswith("- $")
   amount = int(float(amount[3:])*100)
   return seller, amount, message
+
+
 
 with opencontracts.enclave_backend() as enclave:
 
