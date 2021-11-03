@@ -14,9 +14,9 @@ def get_most_recent_tx(mhtml):
   parsed = BeautifulSoup(html.get_payload(decode=False))
   print(parsed.prettify())
   transactions = parsed.find_all(**{'data-testid' :'3D"betweenYou-feed-container"'})[0]
-  messages = transactions.find_all(**{'class': '3D"storyContent_storyContentLink__3z33x"'})
-  amounts = transactions.find_all(**{'class': '3D"jss140'})
-  message, amount = messages[0].text.strip(), amounts[0].text.strip()
+  messages = transactions.findAll('div', {'class': lambda c: c and c.startswith('3D"storyContent_')})
+  message = messages[0].text.strip()
+  amount = messages[0].findParent().findParent().findNextSibling().text.strip()
   #assert amount.startswith("- $")
   amount = int(float(amount[3:])*100)
   return seller, amount, message
