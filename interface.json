@@ -1,7 +1,7 @@
 {
   "name": "Fiat Swap",
   "network": "ropsten",
-  "address": "0x4a33b99C261769eDCc1a1aCC5c70f6201c1Bbf6b",
+  "address": "0x7e1a347B91ae33ee0c85014194eC5f78F72408E0",
   "abi": [
     {
       "inputs": [
