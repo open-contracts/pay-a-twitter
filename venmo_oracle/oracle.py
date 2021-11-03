@@ -40,7 +40,7 @@ with opencontracts.enclave_backend() as enclave:
   mhtml = enclave.interactive_session(url='https://venmo.com', instructions=f"Login, then navigate to {seller}'s profile.\n Pay them ${float(amount)/100} and use the message '{message}'.\n Then navigate to the 'between you' page on {seller}'s profile and click the 'save and exit' button on the right.", tcp_port=14500)
   _seller, _amount, _message = get_most_recent_tx(mhtml)
   
-  if _seller == seller & _amount >= amount & _message == message:   
+  if (_seller == seller) and (_amount >= amount) and (_message == message):   
     enclave.submit(hash, types=("bytes32",), function_name="venmoPurchase")
   else:
     enclave.print(f"Unfortunately your transaction did not have the right parameters :( Seller: {_seller} | Amount: {_amount} | Message: {_message} ") 
