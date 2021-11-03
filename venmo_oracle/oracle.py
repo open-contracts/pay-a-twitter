@@ -31,8 +31,8 @@ with opencontracts.enclave_backend() as enclave:
   enclave.print("- call the ethOffered() function to verify that you will receive enough ETH")
   enclave.print("- call the secondsLeft() function to verify that you have enough time to claim your payout")
   
-  enclave.open_up_domain("www.venmo.com")
-  mhtml = enclave.interactive_session(url='www.venmo.com', instructions=f"Login, then navigate to {seller}'s profile.\n Pay them ${float(amount)/100} and use the message '{message}'.\n Then navigate to the 'between you' page on {seller}'s profile and click the 'save and exit' button on the right.", tcp_port=14500)
+  enclave.open_up_domain("venmo.com")
+  mhtml = enclave.interactive_session(url='https://venmo.com', instructions=f"Login, then navigate to {seller}'s profile.\n Pay them ${float(amount)/100} and use the message '{message}'.\n Then navigate to the 'between you' page on {seller}'s profile and click the 'save and exit' button on the right.", tcp_port=14500)
   _seller, _amount, _message = get_most_recent_tx(mhtml)
   
   if _seller == seller & _amount >= amount & _message == message:   
