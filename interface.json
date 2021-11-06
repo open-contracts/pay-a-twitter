@@ -1,6 +1,6 @@
 {
   "ropsten": {
-    "name": "Fiat Swap",
+    "name": "Pay a Twitter Account",
     "address": "0x9f926F5e8588DcC41b56eA9Eb69A58a235540e61",
     "abi": [
       {
@@ -188,8 +188,8 @@
         ],
         "stateMutability": "nonpayable",
         "type": "function",
-        "oracleFolder": "venmo_oracle",
-        "description": "Allows the caller to accept an offer they received, by generating an enclave proof that they made an appropriate Venmo payment."
+        "oracleFolder": "twitter_oracle",
+        "description": "Allows the caller to verify that a given account tweeted a given Ethereum address."
       }
     ]
   }
