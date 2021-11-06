@@ -3,7 +3,6 @@ from bs4 import BeautifulSoup
 import email
 
 
-
 def get_most_recent_tx(mhtml):
   mhtml = email.message_from_string(mhtml.replace("=\n", ""))
   url = mhtml['Snapshot-Content-Location']
@@ -21,9 +20,10 @@ def get_most_recent_tx(mhtml):
   return seller, amount, message
 
 instructions = """
-Login, then navigate to {}'s profile.
-Pay them ${} and use the message '{}'.
-Then navigate to the 'between you' page on {}'s profile and click the 'save and exit' button on the right.
+1) Pay ${} to {} and use the message '{}'.
+2) Navigate to {}'s account page
+3) Go to the 'between you' tab 
+4) Click the 'save and exit' button on the right.
 """
 
 with opencontracts.enclave_backend() as enclave:
@@ -42,7 +42,7 @@ with opencontracts.enclave_backend() as enclave:
   
   enclave.open_up_domain("venmo.com")
   mhtml = enclave.interactive_session(url='https://venmo.com', 
-                                      instructions=instructions.format(seller, float(amount/100), seller))
+                                      instructions=instructions.format(seller, float(amount/100), message, seller))
   _seller, _amount, _message = get_most_recent_tx(mhtml)
   
   if (_seller == seller) and (_amount >= amount) and (_message == message):
