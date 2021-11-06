@@ -1,5 +1,5 @@
 {
-  "network": {
+  "ropsten": {
     "name": "Fiat Swap",
     "address": "0x9f926F5e8588DcC41b56eA9Eb69A58a235540e61",
     "abi": [
