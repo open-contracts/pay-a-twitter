@@ -36,7 +36,7 @@ with opencontracts.enclave_backend() as enclave:
     parsed = BeautifulSoup(html.get_payload(decode=False))
     transactions = parsed.find_all(**{'data-testid' :'3D"betweenYou-feed-container"'})[0]
     transactions = transactions.findAll('div', {'class': lambda c: c and c.startswith('3D"storyContent_')})
-    transactions = map(lambda m: (m.text.strip(), m.findParent().findParent().findNextSibling().text.strip()), messages)
+    transactions = map(lambda m: (m.text.strip(), m.findParent().findParent().findNextSibling().text.strip()), transactions)
     transactions = filter(lambda m, a: (m==message) and a.startswith("- $"), transactions)
     total_payment = sum(map(lambda m, a: int(float(amount[3:])*100), transactions))
     assert total_payment >= amount, f"Found {len(transactions)} payments labeled '{message}', adding up to ${total_payment} which is too low."
