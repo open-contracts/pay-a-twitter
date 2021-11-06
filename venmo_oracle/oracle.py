@@ -2,29 +2,6 @@ import opencontracts
 from bs4 import BeautifulSoup
 import email
 
-
-def parser(mhtml):
-  mhtml = email.message_from_string(mhtml.replace("=\n", ""))
-  url = mhtml['Snapshot-Content-Location']
-  assert url.startswith('https://account.venmo.com/u/'), "Must be on 'https://account.venmo.com/u/<account>' page"
-  seller = url[28:]
-  html = [_ for _ in mhtml.walk() if _.get_content_type() == "text/html"][0]
-  parsed = BeautifulSoup(html.get_payload(decode=False))
-  transactions = parsed.find_all(**{'data-testid' :'3D"betweenYou-feed-container"'})[0]
-  messages = transactions.findAll('div', {'class': lambda c: c and c.startswith('3D"storyContent_')})
-  message = messages[0].text.strip()
-  amount = messages[0].findParent().findParent().findNextSibling().text.strip()
-  assert amount.startswith("- $"), "Can't parse payment"
-  amount = int(float(amount[3:])*100)
-  return seller, amount, message
-
-instructions = """
-1) Pay ${} to {} and use the message '{}'.
-2) Navigate to {}'s account page
-3) Go to the 'between you' tab 
-4) Click the 'Submit' button on the right.
-"""
-
 with opencontracts.enclave_backend() as enclave:
 
   enclave.print("Fiat Swap started running in the Enclave!")
@@ -39,11 +16,30 @@ with opencontracts.enclave_backend() as enclave:
   enclave.print("- call the ethOffered() function to verify that you will receive enough ETH")
   enclave.print("- call the secondsLeft() function to verify that you have enough time to claim your payout")
   
-  enclave.open_up_domain("venmo.com")
-  _seller, _amount, _message = enclave.interactive_session(url='https://venmo.com', parser=parser,
-                                                           instructions=instructions.format(seller, float(amount/100), message, seller))
   
-  if (_seller == seller) and (_amount >= amount) and (_message == message):
-    enclave.submit(venmoHash, types=("bytes32",), function_name="venmoPurchase")
-  else:
-    enclave.print(f"Unfortunately your transaction did not have the right parameters :( Seller: {_seller} | Amount: {_amount} | Message: {_message} ") 
+  instructions = f"""
+  1) Pay ${float(amount/100)} to {seller} and use the message '{message}'.
+  2) Navigate to {seller}'s account page
+  3) Go to the 'Between You' tab 
+  4) Click the 'Submit' button on the right.
+  """
+  
+  def parser(mhtml):
+    mhtml = email.message_from_string(mhtml.replace("=\n", ""))
+    url = mhtml['Snapshot-Content-Location']
+    target_url = f'https://account.venmo.com/u/{seller}'
+    assert url==target_url, f"You hit 'Submit' on '{url}', but should do so on '{target_url}'."
+    html = [_ for _ in mhtml.walk() if _.get_content_type() == "text/html"][0]
+    parsed = BeautifulSoup(html.get_payload(decode=False))
+    transactions = parsed.find_all(**{'data-testid' :'3D"betweenYou-feed-container"'})[0]
+    messages = transactions.findAll('div', {'class': lambda c: c and c.startswith('3D"storyContent_')})
+    assert messages[0].text.strip() == message, f"The most recent transaction used '{messages[0].text.strip()}' as message, not '{message}'"
+    amount = messages[0].findParent().findParent().findNextSibling().text.strip()
+    assert amount.startswith("- $"), f"Most recent transaction was not a payment to {seller}."
+    assert int(float(amount[3:])*100) >= amount, f'Most recent payment less than the required ${float(amount/100)}'
+    return int(float(amount[3:])*100)
+  
+  enclave.open_up_domain("venmo.com")
+  payment = enclave.interactive_session(url='https://venmo.com', parser=parser, instructions=instructions)
+  enclave.print(f'Your payment of ${payment} was confirmed.')
+  enclave.submit(venmoHash, types=("bytes32",), function_name="venmoPurchase")
