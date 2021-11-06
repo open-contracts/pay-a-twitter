@@ -13,15 +13,16 @@ with opencontracts.enclave_backend() as enclave:
   
   venmoHash = enclave.keccak(seller, amount, message, secret, types=('string', 'uint256', 'string', 'string'))
   warning = f"""
-  The information you entered would produce the venmoHash {'0x' + venmoHash.hex()}.
+  The information you entered would produce the venmoHash:
+  {'0x' + venmoHash.hex()}
   Before proceeding to make a payment:
-     - call the ethOffered() function to verify that you will receive enough ETH
-     - call the secondsLeft() function to verify that you have enough time to claim your payout.
+     - call ethOffered() to verify you will receive enough ETH
+     - call secondsLeft() to verify you have enough time to claim your payout.
   """
   enclave.print(warning)
     
   instructions = f"""
-  1) Pay ${float(amount/100)} to {seller} and use the message '{message}'.
+  1) Pay ${amount/100} to {seller} and use the message '{message}'.
   2) Navigate to {seller}'s account page
   3) Go to the 'Between You' tab 
   4) Click the 'Submit' button on the right.
@@ -39,10 +40,10 @@ with opencontracts.enclave_backend() as enclave:
     transactions = map(lambda t: (t.text.strip(), t.findParent().findParent().findNextSibling().text.strip()), transactions)
     transactions = list(filter(lambda t: (t[0]==message) and t[1].startswith("- $"), transactions))
     total_payment = sum(map(lambda t: int(float(t[1][3:])*100), transactions))
-    assert total_payment >= amount, f"Found {len(transactions)} payments labeled '{message}', adding up to ${total_payment} which is too low."
+    assert total_payment >= amount, f"Found {len(transactions)} payments labeled '{message}', adding up to ${total_payment/100} which is too low."
     return total_payment
   
   enclave.open_up_domain("venmo.com")
   payment = enclave.interactive_session(url='https://venmo.com', parser=parser, instructions=instructions)
-  enclave.print(f'Your total payment of ${payment} to {seller} was confirmed.')
+  enclave.print(f'Your total payment of ${payment/100} to {seller} was confirmed.')
   enclave.submit(venmoHash, types=("bytes32",), function_name="venmoPurchase")
