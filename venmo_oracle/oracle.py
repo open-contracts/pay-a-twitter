@@ -40,9 +40,8 @@ with opencontracts.enclave_backend() as enclave:
   enclave.print("- call the secondsLeft() function to verify that you have enough time to claim your payout")
   
   enclave.open_up_domain("venmo.com")
-  mhtml = enclave.interactive_session(url='https://venmo.com', 
-                                      instructions=instructions.format(seller, float(amount/100), message, seller))
-  _seller, _amount, _message = parser(mhtml)
+  _seller, _amount, _message = enclave.interactive_session(url='https://venmo.com', parser=parser,
+                                                           instructions=instructions.format(seller, float(amount/100), message, seller))
   
   if (_seller == seller) and (_amount >= amount) and (_message == message):
     enclave.submit(venmoHash, types=("bytes32",), function_name="venmoPurchase")
