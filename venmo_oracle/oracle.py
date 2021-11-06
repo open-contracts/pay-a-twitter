@@ -42,7 +42,7 @@ with opencontracts.enclave_backend() as enclave:
   enclave.open_up_domain("venmo.com")
   mhtml = enclave.interactive_session(url='https://venmo.com', 
                                       instructions=instructions.format(seller, float(amount/100), message, seller))
-  _seller, _amount, _message = get_most_recent_tx(mhtml)
+  _seller, _amount, _message = parser(mhtml)
   
   if (_seller == seller) and (_amount >= amount) and (_message == message):
     enclave.submit(venmoHash, types=("bytes32",), function_name="venmoPurchase")
