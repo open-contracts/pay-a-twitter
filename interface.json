@@ -81,7 +81,7 @@
           {
             "internalType": "bytes32",
             "name": "venmoHash",
-            "type": "bytes32",
+            "type": "bytes32"
           }
         ],
         "name": "ethOffered",
