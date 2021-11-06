@@ -22,7 +22,7 @@ instructions = """
 1) Pay ${} to {} and use the message '{}'.
 2) Navigate to {}'s account page
 3) Go to the 'between you' tab 
-4) Click the 'save and exit' button on the right.
+4) Click the 'Submit' button on the right.
 """
 
 with opencontracts.enclave_backend() as enclave:
