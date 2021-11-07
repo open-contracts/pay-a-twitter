@@ -31,4 +31,5 @@ with opencontracts.enclave_backend() as enclave:
                                                        instructions=instructions)
   
   enclave.print(f"Verified that '{user}' tweeted '{tweet}' at unix time {unix_time}")
-  enclave.submit(user, unix_time, tweet, types=("string", "uint256", "address"), function_name="submitTweet")
+  enclave.submit(user, unix_time, tweet, types=("string", "uint256", "address"),
+                 function_name="submitTweet")
