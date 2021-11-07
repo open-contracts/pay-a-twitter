@@ -7,7 +7,7 @@ with opencontracts.enclave_backend() as enclave:
   enclave.print("Twitter Oracle started running in the Enclave!")
    
   instructions = f"""
-  1) Click on a tweet.
+  1) Login and click on a tweet.
   2) Click the 'Submit' button on the right.
   """
   
