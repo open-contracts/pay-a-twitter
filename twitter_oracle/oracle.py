@@ -14,7 +14,8 @@ with opencontracts.enclave_backend() as enclave:
   def extract_from_tweet(mhtml):
     mhtml = email.message_from_string(mhtml.replace("=\n", ""))
     url = mhtml['Snapshot-Content-Location']
-    assert re.match('^https://twitter.com/.*/status/.*', url) is not None, 'Need to click on a specific tweet.'
+    match = re.match('^https://twitter.com/.*/status/.*', url)
+    assert match is not None, "You need to click on a specific tweet before hitting 'submit'."
     user, _, status_id = url.replace('https://twitter.com/', '').split("/")
     status_id = int(status_id)
     html = [_ for _ in mhtml.walk() if _.get_content_type() == "text/html"][0]
