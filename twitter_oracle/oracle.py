@@ -26,7 +26,9 @@ with opencontracts.enclave_backend() as enclave:
     return user, unix_time, tweet
   
   enclave.open_up_domain("twitter.com")
-  user, unix_time, tweet = enclave.interactive_session(url='https://twitter.com', parser=extract_from_tweet, instructions=instructions)
+  user, unix_time, tweet = enclave.interactive_session(url='https://twitter.com',
+                                                       parser=extract_from_tweet,
+                                                       instructions=instructions)
   
   enclave.print(f"Verified that '{user}' tweeted '{tweet}' at unix time {unix_time}")
   enclave.submit(user, unix_time, tweet, types=("string", "uint256", "address"), function_name="submitTweet")
