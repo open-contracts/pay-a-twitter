@@ -1,7 +1,7 @@
 {
   "ropsten": {
     "name": "Pay a Twitter Account",
-    "address": "0x9f926F5e8588DcC41b56eA9Eb69A58a235540e61",
+    "address": "0x6258B9Af809900b43E078d8a48101066328fc2DD",
     "abi": [
 	{
 		"inputs": [
