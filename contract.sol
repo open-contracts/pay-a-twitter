@@ -2,48 +2,28 @@ pragma solidity ^0.8.0;
 
 import "https://github.com/open-contracts/protocol/blob/main/solidity_contracts/OpenContractRopsten.sol";
 
-contract FiatSwap is OpenContractAlpha {
+contract PayTwitterAccount is OpenContractAlpha {
     
-    mapping(bytes32 => address) seller;
-    mapping(bytes32 => address) buyer;
-    mapping(bytes32 => uint256) amount;
-    mapping(bytes32 => uint256) lockedUntil;
-
-
-    function secondsLeft(bytes32 offerHash) public view returns(int256) {
-        return int256(lockedUntil[offerHash]) - int256(block.timestamp);
-    }
-
-    function ethOffered(bytes32 offerHash) public view returns(uint256) {
-        require(msg.sender == buyer[offerHash], "No ETH offered for you.");
-        return amount[offerHash];
-    }
-
-
-    function computeHash(string memory sellerVenmo, uint256 priceInCent, string memory transactionMessage, string memory secret) public pure returns(bytes32) {
-        return keccak256(abi.encodePacked(sellerVenmo, priceInCent, transactionMessage, secret));
-    }
-
-    function venmoPurchase(bytes32 oracleHash, address payable msgSender, bytes32 offerHash) 
-    public _oracle(oracleHash, msgSender, this.venmoPurchase.selector) returns(bool) {
-        require(buyer[offerHash] == msgSender);
-        uint256 payment = amount[offerHash];
-        amount[offerHash] = 0;
-        return msgSender.send(payment);
-    }
-
-    function offer(address to, bytes32 offerHash, uint256 lockForSeconds) public payable {
-        amount[offerHash] = msg.value;
-        buyer[offerHash] = to;
-        lockedUntil[offerHash] = block.timestamp + lockForSeconds;
-        seller[offerHash] = msg.sender;
+    mapping(string => bool) owner;
+    
+    constructor (string memory twitterHandle) {
+        owner[twitterHandle] = true;
     }
     
-    function retract(bytes32 offerHash) public returns(bool) {
-        require(seller[offerHash] == msg.sender, 'only seller can retract offer');
-        require(lockedUntil[offerHash] <= block.timestamp, "can't retract offer during the locking period. check 'secondsLeft()'");
-        uint256 payment = amount[offerHash];
-        amount[offerHash] = 0;
-        return payable(msg.sender).send(payment);
+    function claim(bytes32 oracleHash, address msgSender, string memory twitterHandle, address tweetedAddress, address erc20address)
+    public _oracle(oracleHash, msgSender, this.claim.selector) {
+        require(owner[twitterHandle], "Tweet does not come from the correct twitter handle.");
+        
+        // transfer all ETH
+        payable(tweetedAddress).transfer(address(this).balance);
+        
+        // transfer all the contracts ERC20 
+        IERC20 token = IERC20(erc20address);
+        token.transfer(tweetedAddress, token.balanceOf(address(this)));
     }
+}
+
+interface IERC20 {
+    function transfer(address recipient, uint256 amount) external returns (bool);
+    function balanceOf(address account) external view returns (uint256);
 }
