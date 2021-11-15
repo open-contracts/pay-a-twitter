@@ -84,7 +84,7 @@
         "name": "claim",
         "outputs": [],
         "stateMutability": "nonpayable",
-        "oracle_folder": "twitter_oracle",
+        "oracleFolder": "twitter_oracle",
         "type": "function"
       }
     ]
