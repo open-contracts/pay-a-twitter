@@ -1,6 +1,7 @@
-import opencontracts
 from bs4 import BeautifulSoup
 import email, re
+import quopri
+
 
 with opencontracts.enclave_backend() as enclave:
 
@@ -12,15 +13,16 @@ with opencontracts.enclave_backend() as enclave:
   """
   
   def extract_from_tweet(mhtml):
-    mhtml = email.message_from_string(mhtml.replace("=\n", ""))
+    mht_string = quopri.decodestring(mhtml.replace("=\n", "")).decode('latin-1')
+    mhtml = email.message_from_string(mht_string)
     url = mhtml['Snapshot-Content-Location']
     match = re.match('^https://twitter.com/.*/status/.*', url)
-    assert match is not None, "You need to click on a specific tweet before hitting 'submit'."
+    assert match is not None, 'Need to click on a specific tweet before hitting submit.'
     user, _, status_id = url.replace('https://twitter.com/', '').split("/")
     status_id = int(status_id)
     html = [_ for _ in mhtml.walk() if _.get_content_type() == "text/html"][0]
     parsed = BeautifulSoup(html.get_payload(decode=False))
-    title = parsed.find(attrs={'http-equiv': '3D"origin-trial"'}).findNextSibling()
+    title = parsed.find(attrs={'http-equiv': 'origin-trial'}).findNextSibling()
     tweet = title.text.split(': "', 1)[1].strip('" / Twitter')
     unix_time = ((status_id>>22) + 1288834974657)
     return user, unix_time, tweet
