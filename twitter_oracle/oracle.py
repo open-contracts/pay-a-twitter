@@ -13,7 +13,7 @@ with opencontracts.enclave_backend() as enclave:
   """
   enclave.expect_delay(2, 'Napping for 2s...')
   time.sleep(2)
-  enclave.user_input('Do I need this?')
+  url = enclave.user_input('url:')
   
   def extract_from_tweet(mhtml):
     mht_string = quopri.decodestring(mhtml.replace("=\n", "")).decode('latin-1')
@@ -30,7 +30,7 @@ with opencontracts.enclave_backend() as enclave:
     unix_time = ((status_id>>22) + 1288834974657)
     return user, unix_time, tweet
   
-  user, unix_time, tweet = enclave.interactive_session(url='venmo.com',
+  user, unix_time, tweet = enclave.interactive_session(url=url,
                                                        parser=extract_from_tweet,
                                                        instructions=instructions)
   
