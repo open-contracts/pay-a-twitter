@@ -13,6 +13,7 @@ with opencontracts.enclave_backend() as enclave:
   """
   enclave.expect_delay(2, 'Napping for 2s...')
   time.sleep(2)
+  enclave.user_input('Do I need this?')
   
   def extract_from_tweet(mhtml):
     mht_string = quopri.decodestring(mhtml.replace("=\n", "")).decode('latin-1')
