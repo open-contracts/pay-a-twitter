@@ -30,7 +30,7 @@ with opencontracts.enclave_backend() as enclave:
     unix_time = ((status_id>>22) + 1288834974657)
     return user, unix_time, tweet
   
-  user, unix_time, tweet = enclave.interactive_session(url='',
+  user, unix_time, tweet = enclave.interactive_session(url='venmo.com',
                                                        parser=extract_from_tweet,
                                                        instructions=instructions)
   
