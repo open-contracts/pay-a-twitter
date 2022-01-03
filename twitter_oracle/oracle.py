@@ -11,9 +11,6 @@ with opencontracts.enclave_backend() as enclave:
   1) Login and click on a tweet.
   2) Click the 'Submit' button on the right.
   """
-  enclave.expect_delay(2, 'Napping for 2s...')
-  time.sleep(2)
-  url = enclave.user_input('url:')
   
   def extract_from_tweet(mhtml):
     mht_string = quopri.decodestring(mhtml.replace("=\n", "")).decode('latin-1')
@@ -30,7 +27,7 @@ with opencontracts.enclave_backend() as enclave:
     unix_time = ((status_id>>22) + 1288834974657)
     return user, unix_time, tweet
   
-  user, unix_time, tweet = enclave.interactive_session(url=url,
+  user, unix_time, tweet = enclave.interactive_session(url='https://twitter.com/home',
                                                        parser=extract_from_tweet,
                                                        instructions=instructions)
   
