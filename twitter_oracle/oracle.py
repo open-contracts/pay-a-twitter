@@ -1,6 +1,6 @@
 import opencontracts
 from bs4 import BeautifulSoup
-import email, re
+import email, re, time
 import quopri
 
 with opencontracts.enclave_backend() as enclave:
@@ -11,6 +11,8 @@ with opencontracts.enclave_backend() as enclave:
   1) Login and click on a tweet.
   2) Click the 'Submit' button on the right.
   """
+  enclave.expect_delay(10, 'Napping for 10s...')
+  time.sleep(10)
   
   def extract_from_tweet(mhtml):
     mht_string = quopri.decodestring(mhtml.replace("=\n", "")).decode('latin-1')
