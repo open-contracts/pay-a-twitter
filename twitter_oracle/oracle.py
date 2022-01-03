@@ -1,7 +1,7 @@
+import opencontracts
 from bs4 import BeautifulSoup
 import email, re
 import quopri
-
 
 with opencontracts.enclave_backend() as enclave:
 
