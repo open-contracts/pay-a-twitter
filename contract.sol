@@ -10,7 +10,7 @@ contract PayTwitterAccount is OpenContractAlpha {
         owner[twitterHandle] = true;
     }
     
-    function claim(bytes32 oracleHash, address msgSender, string memory twitterHandle, address tweetedAddress, address erc20address)
+    function claim(bytes32 oracleHash, string memory twitterHandle, address tweetedAddress, address erc20address)
     public _oracle(oracleHash, msgSender, this.claim.selector) {
         require(owner[twitterHandle], "Tweet does not come from the correct twitter handle.");
         
