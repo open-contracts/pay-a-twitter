@@ -2,7 +2,7 @@ pragma solidity ^0.8.0;
 
 import "https://github.com/open-contracts/protocol/blob/main/solidity_contracts/OpenContractRopsten.sol";
 
-contract PayTwitterAccount is OpenContractAlpha {
+contract PayTwitterAccount is OpenContract {
     
     mapping(string => bool) owner;
     
