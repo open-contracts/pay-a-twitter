@@ -4,7 +4,7 @@ import "https://github.com/open-contracts/protocol/blob/main/solidity_contracts/
 
 contract PayTwitterAccount is OpenContract {
     
-    mapping(string => bool) owner;
+    mapping(string => bool) isOwner;
     
     constructor (string memory twitterHandle) {
         isOwner[twitterHandle] = true;
