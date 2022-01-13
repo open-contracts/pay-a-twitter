@@ -1,7 +1,7 @@
 {
   "ropsten": {
     "name": "Pay A Twitter Account",
-    "address": "0x27d53d3Aafde2B16E2841036Fef59896962A7E03",
+    "address": "0xE434B7C2A09697edf3117206676769a2f7aDD818",
     "abi": [
 	{
 		"inputs": [],
@@ -27,7 +27,7 @@
 			}
 		],
 		"name": "claim",
-		"oracleFolder": "twitter_oracle"
+		"oracleFolder": "twitter_oracle",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
