@@ -1,12 +1,31 @@
 {
   "ropsten": {
     "name": "Pay A Twitter Account",
-    "address": "0xE434B7C2A09697edf3117206676769a2f7aDD818",
+    "address": "0xc8bf1115EB097A4c33d865Be7040ffde8D4FDeA5",
     "abi": [
 	{
 		"inputs": [],
 		"stateMutability": "nonpayable",
 		"type": "constructor"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			}
+		],
+		"name": "balances",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
 	},
 	{
 		"inputs": [
@@ -27,7 +46,7 @@
 			}
 		],
 		"name": "claim",
-		"oracleFolder": "twitter_oracle",
+		"oracleFolder": "twitter_oracle";
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
