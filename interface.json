@@ -4,13 +4,7 @@
     "address": "0x27d53d3Aafde2B16E2841036Fef59896962A7E03",
     "abi": [
 	{
-		"inputs": [
-			{
-				"internalType": "string",
-				"name": "twitterHandle",
-				"type": "string"
-			}
-		],
+		"inputs": [],
 		"stateMutability": "nonpayable",
 		"type": "constructor"
 	},
@@ -36,6 +30,19 @@
 		"oracleFolder": "twitter_oracle"
 		"outputs": [],
 		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "twitterHandle",
+				"type": "string"
+			}
+		],
+		"name": "deposit",
+		"outputs": [],
+		"stateMutability": "payable",
 		"type": "function"
 	}
 ]
