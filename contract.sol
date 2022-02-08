@@ -10,11 +10,11 @@ contract PayATwitterAccount is OpenContract {
         setOracle("any", this.claim.selector);
     }
     
-    function claim(bytes32 oracleID, string memory twitterHandle, address tweetedAddress)
+    function claim(bytes32 oracleID, string memory twitterHandle, address account)
     public checkOracle(oracleID, this.claim.selector) {
         uint256 balance = balances[twitterHandle];
         balances[twitterHandle] = 0;
-        payable(tweetedAddress).transfer(balance);
+        payable(account).transfer(balance);
     }
 
     function deposit(string memory twitterHandle) public payable {
