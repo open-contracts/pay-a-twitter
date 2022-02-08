@@ -20,6 +20,7 @@ with opencontracts.enclave_backend() as enclave:
     html = [_ for _ in mhtml.walk() if _.get_content_type() == "text/html"][0]
     parsed = BeautifulSoup(html.get_payload(decode=False))
     enclave.print(parsed.find(attrs={'aria-label': 'Profile'})) 
+    enclave.print(parsed)
     handle = parsed.find(attrs={'aria-label': 'Profile'})['href'].split('/')[-1]
     return handle
   
