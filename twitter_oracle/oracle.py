@@ -19,6 +19,7 @@ with opencontracts.enclave_backend() as enclave:
     assert url == "https://twitter.com/home", f"You clicked 'Submit' on '{url}', but should do so on 'https://twitter.com/home'!"
     html = [_ for _ in mhtml.walk() if _.get_content_type() == "text/html"][0]
     parsed = BeautifulSoup(html.get_payload(decode=False))
+    enclave.print(parsed.find(attrs={'aria-label': 'Profile'})) 
     handle = parsed.find(attrs={'aria-label': 'Profile'})['href'].split('/')[-1]
     return handle
   
