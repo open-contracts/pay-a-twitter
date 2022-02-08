@@ -20,6 +20,7 @@ with opencontracts.enclave_backend() as enclave:
     assert url == target, f"You hit 'Submit' on {url}, but should do so on 'target'"
     html = [_ for _ in mhtml.walk() if _.get_content_type() == "text/html"][0]
     text = list(BeautifulSoup(html.get_payload(decode=False)).strings)
+    enclave.print(text)
     info = text.index('Account information')
     assert text[info + 1] == "Username"
     return text[info + 2]
