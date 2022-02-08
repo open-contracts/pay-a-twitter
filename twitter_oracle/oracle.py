@@ -27,4 +27,4 @@ with opencontracts.enclave_backend() as enclave:
                                        instructions=instructions)
   
   address = enclave.user_input(f"Verified that {enclave.user()} belongs to @{handle}!")
-  enclave.submit(handle, enclave.user(), types=("string", "uint256", "address"), function_name="submitTweet")
+  enclave.submit(handle, enclave.user(), types=("string", "address"), function_name="submitTweet")
