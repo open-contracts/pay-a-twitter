@@ -9,20 +9,20 @@ with opencontracts.enclave_backend() as enclave:
 
   instructions = f"""
   1) Login
-  2) On the Twitter home page, click the 'Submit' button on the right.
+  2) Click on '(...) More' -> 'Settings' -> 'Your Acount'
+  3) Enter your password and hit 'Submit'
   """
   
   def extract_handle(mhtml):
     mht_string = quopri.decodestring(mhtml.replace("=\n", "")).decode('latin-1')
     mhtml = email.message_from_string(mht_string)
-    url = mhtml['Snapshot-Content-Location']
-    #assert url == "https://twitter.com/home", f"You clicked 'Submit' on '{url}', but should do so on 'https://twitter.com/home'!"
+    url, target = mhtml['Snapshot-Content-Location'], "https://twitter.com/settings/your_twitter_data/account"
+    assert url == target, f"You hit 'Submit' on {url}, but should do so on 'target'"
     html = [_ for _ in mhtml.walk() if _.get_content_type() == "text/html"][0]
-    enclave.print(str(html))
-    parsed = BeautifulSoup(html.get_payload(decode=False))
-    enclave.print(str(parsed))
-    handle = parsed.find(attrs={'aria-label': 'Profile'})['href'].split('/')[-1]
-    return handle
+    text = list(BeautifulSoup(html.get_payload(decode=False)).strings)
+    info = text.index('Account information')
+    assert text[info + 1] == "Username"
+    return text[info + 2]
   
   handle = enclave.interactive_session(url='https://twitter.com/home', 
                                        parser=extract_handle,
