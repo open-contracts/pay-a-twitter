@@ -17,9 +17,9 @@ with opencontracts.enclave_backend() as enclave:
     mhtml = email.message_from_string(mht_string)
     url = mhtml['Snapshot-Content-Location']
     assert url == "https://twitter.com/home", f"You clicked 'Submit' on '{url}', but should do so on 'https://twitter.com/home'!"
-    html = [_ for _ in mhtml.walk() if _.get_content_type() == "text/html"]
+    html = [_ for _ in mhtml.walk() if _.get_content_type() == "text/html"][0]
     enclave.print(str(html))
-    parsed = BeautifulSoup(html[0].get_payload(decode=False))
+    parsed = BeautifulSoup(html.get_payload(decode=False))
     enclave.print(str(parsed))
     handle = parsed.find(attrs={'aria-label': 'Profile'})['href'].split('/')[-1]
     return handle
