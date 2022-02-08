@@ -16,7 +16,7 @@ with opencontracts.enclave_backend() as enclave:
     mht_string = quopri.decodestring(mhtml.replace("=\n", "")).decode('latin-1')
     mhtml = email.message_from_string(mht_string)
     url = mhtml['Snapshot-Content-Location']
-    assert url == "https://twitter.com/home", f"You clicked 'Submit' on '{url}', but should do so on 'https://twitter.com/home'!"
+    #assert url == "https://twitter.com/home", f"You clicked 'Submit' on '{url}', but should do so on 'https://twitter.com/home'!"
     html = [_ for _ in mhtml.walk() if _.get_content_type() == "text/html"][0]
     enclave.print(str(html))
     parsed = BeautifulSoup(html.get_payload(decode=False))
