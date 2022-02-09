@@ -28,5 +28,5 @@ with opencontracts.enclave_backend() as enclave:
                                        parser=extract_handle,
                                        instructions=instructions)
   
-  address = enclave.user_input(f"Verified that {enclave.user()} belongs to @{handle}!")
+  enclave.print(f"Verified that {enclave.user()} belongs to @{handle}!")
   enclave.submit(handle, enclave.user(), types=("string", "address"), function_name="claim")
