@@ -23,7 +23,7 @@ with opencontracts.enclave_backend() as enclave:
     enclave.print(text)
     info = text.index('Account information')
     assert text[info + 1] == "Username"
-    return text[info + 2]
+    return text[info + 2][1:]
   
   handle = enclave.interactive_session(url='https://twitter.com/home', 
                                        parser=extract_handle,
