@@ -27,6 +27,6 @@ with opencontracts.enclave_backend() as enclave:
   handle = enclave.interactive_session(url='https://twitter.com/home', 
                                        parser=extract_handle,
                                        instructions=instructions)
-  
-  enclave.print(f"Verified that {enclave.user()} belongs to @{handle}!")
-  enclave.submit(handle, enclave.user(), types=("string", "address"), function_name="claim")
+  account = enclave.user()
+  enclave.print(f"Verified that {account} belongs to @{handle}!")
+  enclave.submit(handle, account, types=("string", "address"), function_name="claim")
