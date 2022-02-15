@@ -23,9 +23,8 @@ with opencontracts.enclave_backend() as enclave:
     assert text[info + 1] == "Username"
     return text[info + 2][1:]
   
-  handle = enclave.interactive_session(url='https://twitter.com/home', 
-                                       parser=extract_handle,
-                                       instructions=instructions)
+  handle = enclave.interactive_session(url='https://twitter.com/home', parser=extract_handle,
+                                       instructions=instructions, refresh_before_submit=True)
   account = enclave.user()
   enclave.print(f"Verified that {account} belongs to @{handle}!")
-  enclave.submit(handle, account, types=("string", "address"), function_name="claim", refresh_before_submit=True)
+  enclave.submit(handle, account, types=("string", "address"), function_name="claim")
