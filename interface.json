@@ -29,11 +29,6 @@
 	{
 		"inputs": [
 			{
-				"internalType": "bytes32",
-				"name": "oracleID",
-				"type": "bytes32"
-			},
-			{
 				"internalType": "string",
 				"name": "twitterHandle",
 				"type": "string"
