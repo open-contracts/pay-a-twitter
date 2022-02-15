@@ -1,7 +1,6 @@
 {
-  "ropsten": {
     "name": "Pay A Twitter Account",
-    "address": "0xc8bf1115EB097A4c33d865Be7040ffde8D4FDeA5",
+    "address": {"ropsten": "0x78b4d78436238dF64d37a093f63E76558A8f94fc"},
     "abi": [
 	{
 		"inputs": [],
@@ -65,5 +64,4 @@
 		"type": "function"
 	}
 ]
-  }
 }
