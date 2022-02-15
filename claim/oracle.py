@@ -28,4 +28,4 @@ with opencontracts.enclave_backend() as enclave:
                                        instructions=instructions)
   account = enclave.user()
   enclave.print(f"Verified that {account} belongs to @{handle}!")
-  enclave.submit(handle, account, types=("string", "address"), function_name="claim")
+  enclave.submit(handle, account, types=("string", "address"), function_name="claim", refresh_before_save=True)
