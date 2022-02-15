@@ -1,62 +1,63 @@
 {
-    "name": "Pay A Twitter Account",
-    "address": {"ropsten": "0x78b4d78436238dF64d37a093f63E76558A8f94fc"},
-    "abi": [
-	{
-		"inputs": [],
-		"stateMutability": "nonpayable",
-		"type": "constructor"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "string",
-				"name": "twitterHandle",
-				"type": "string"
-			}
-		],
-		"name": "balances",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "string",
-				"name": "twitterHandle",
-				"type": "string"
-			},
-			{
-				"internalType": "address",
-				"name": "tweetedAddress",
-				"type": "address"
-			}
-		],
-		"name": "claim",
-		"oracleFolder": "twitter_oracle",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "string",
-				"name": "twitterHandle",
-				"type": "string"
-			}
-		],
-		"name": "deposit",
-		"outputs": [],
-		"stateMutability": "payable",
-		"type": "function"
-	}
-]
+  "name": "Pay A Twitter Account",
+  "address": {
+    "ropsten": "0x78b4d78436238dF64d37a093f63E76558A8f94fc"
+  },
+  "abi": [
+    {
+      "inputs": [],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "",
+          "type": "string"
+        }
+      ],
+      "name": "balances",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "twitterHandle",
+          "type": "string"
+        },
+        {
+          "internalType": "address",
+          "name": "tweetedAddress",
+          "type": "address"
+        }
+      ],
+      "name": "claim",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "twitterHandle",
+          "type": "string"
+        }
+      ],
+      "name": "deposit",
+      "outputs": [],
+      "stateMutability": "payable",
+      "type": "function"
+    }
+  ]
 }
