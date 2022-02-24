@@ -1,6 +1,6 @@
 import opencontracts
 from bs4 import BeautifulSoup
-import email, re, time, quopri
+import email, re, time
 
 with opencontracts.enclave_backend() as enclave:
 
@@ -8,23 +8,21 @@ with opencontracts.enclave_backend() as enclave:
 
   instructions = f"""
   1) Login
-  2) Click on '(...) More' -> 'Settings' -> 'Your Acount'
-  3) Enter your password and hit 'Submit'
+  2) Click on '(...) More' -> 'Settings and Privacy' -> 'Your Acount'
+  3) Click on 'Account Information' -> enter your password -> hit 'Submit'
   """
   
-  def extract_handle(mhtml):
-    mht_string = quopri.decodestring(mhtml.replace("=\n", "")).decode('latin-1')
-    mhtml = email.message_from_string(mht_string)
-    url, target = mhtml['Snapshot-Content-Location'], "https://twitter.com/settings/your_twitter_data/account"
-    assert url == target, f"You hit 'Submit' on {url}, but should do so on 'target'"
-    html = [_ for _ in mhtml.walk() if _.get_content_type() == "text/html"][0]
-    text = list(BeautifulSoup(html.get_payload(decode=False)).strings)
+  def extract_handle(url, html):
+    target = "https://twitter.com/settings/your_twitter_data/account"
+    assert url == target, f"You hit 'Submit' on {url}, but should do so on {target}"
+    text = list(BeautifulSoup(html).strings)
     info = text.index('Account information')
     assert text[info + 1] == "Username"
     return text[info + 2][1:]
   
-  handle = enclave.interactive_session(url='https://twitter.com/home', parser=extract_handle,
-                                       instructions=instructions, refresh_before_submit=True)
+  handle = enclave.interactive_session(url='https://twitter.com/home',
+                                       parser=extract_handle,
+                                       instructions=instructions)
   account = enclave.user()
   enclave.print(f"Verified that {account} belongs to @{handle}!")
   enclave.submit(handle, account, types=("string", "address"), function_name="claim")
