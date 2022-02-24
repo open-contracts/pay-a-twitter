@@ -1,6 +1,5 @@
 import opencontracts
 from bs4 import BeautifulSoup
-import email, re, time
 
 with opencontracts.enclave_backend() as enclave:
 
