@@ -17,8 +17,8 @@ with opencontracts.session() as session:
     assert url == target, f"You hit 'Submit' on {url}, but should do so on {target}"
     for string in BeautifulSoup(html).strings:
       if string.startswith('@'): return string[1:]
-    raise Exception("No Username found")
-    
+    raise Exception("No Username found.")
+
   handle = session.interactive_browser('https://twitter.com', parser, instructions)
   account = session.user()
   session.print(f"Verified that {account} belongs to @{handle}!")
