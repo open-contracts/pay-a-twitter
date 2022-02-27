@@ -6,7 +6,7 @@ contract PayATwitterAccount is OpenContract {
     mapping(string => uint256) public balances;
     
     constructor () {
-        setOracleHash(this.claim.selector, 0x001e8436420ef9c38f6028a081e8c4bce4a7b3c13a889664db6545a0b61c8467);
+        setOracleHash(this.claim.selector, 0x18397129c99c63baae375f7b480aa97f2fcf1d747b171b7db033c788fd732098);
     }
     
     function claim(string memory twitterHandle, address user) public requiresOracle {
