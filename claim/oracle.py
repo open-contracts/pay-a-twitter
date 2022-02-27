@@ -16,7 +16,7 @@ with opencontracts.session() as session:
     target = "https://twitter.com/settings/your_twitter_data/account"
     assert url == target, f"You hit 'Submit' on {url}, but should do so on {target}"
     for string in BeautifulSoup(html).strings:
-      if string.startswith('@'): return string
+      if string.startswith('@'): return string[1:]
     raise Exception("No Username found")
     
   handle = session.interactive_browser('https://twitter.com', parser, instructions)
