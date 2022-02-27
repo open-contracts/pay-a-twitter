@@ -1,29 +1,25 @@
 import opencontracts
 from bs4 import BeautifulSoup
 
-with opencontracts.enclave_backend() as enclave:
+with opencontracts.session() as session:
 
-  enclave.print("Twitter Oracle started running in the Enclave! Log into Twitter to prove your handle.")
+  session.print("Twitter Oracle started running in the Enclave! Log into Twitter to prove your handle.")
 
   instructions = f"""
   1) Login
-  2) Click on '(...) More' -> 'Settings and Privacy' -> 'Your Acount'
-  3) Click on 'Account Information' -> enter your password -> hit 'Submit'
+  2) In the left navigation pane, click on 'More' -> 'Settings and Privacy' -> 'Your Acount'
+  3) Click on 'Account Information' and enter your password
+  4) Click the 'Submit' button
   """
 
-  def extract_handle(url, html):
+  def parser(url, html):
     target = "https://twitter.com/settings/your_twitter_data/account"
     assert url == target, f"You hit 'Submit' on {url}, but should do so on {target}"
-    text = list(BeautifulSoup(html).strings)
-    index = text.index('Account information')
-    for string in text[text.index('Account information'):]:
-      if string.startswith('@'):
-        return string
-      else:
-        assert False, "Username not found"
-  handle = enclave.interactive_session(url='https://twitter.com',
-                                       parser=extract_handle,
-                                       instructions=instructions)
-  account = enclave.user()
-  enclave.print(f"Verified that {account} belongs to @{handle}!")
-  enclave.submit(handle, account, types=("string", "address"), function_name="claim")
+    for string in BeautifulSoup(html).strings:
+      if string.startswith('@'): return string
+    raise Exception("No Username found")
+    
+  handle = session.interactive_browser('https://twitter.com', parser, instructions)
+  account = session.user()
+  session.print(f"Verified that {account} belongs to @{handle}!")
+  session.submit(handle, account, types=("string", "address"), function_name="claim")
